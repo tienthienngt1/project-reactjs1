@@ -1,0 +1,16 @@
+{
+    // "compilerOptions": {
+    //     "baseUrl": "./",
+    //     "paths": {
+    //         "@assets/*": ["assets/*"],
+    //         "@component/*": ["componet/*"],
+    //         "@constants/*": ["constants/"],
+    //         "@context/*": ["context/"],
+    //         "@cores/*": ["cores/*"],
+    //         "@helps/*": ["helps/*"],
+    //         "@pages/*": ["pages/*"],
+    //         "@reducer/*": ["reducer/*"],
+    //         "@routes/*": ["routes/*"],
+    //     }
+    // }
+}
