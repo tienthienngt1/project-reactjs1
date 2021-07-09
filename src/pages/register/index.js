@@ -2,8 +2,10 @@ import RegisterForm from "../../component/register/RegisterForm";
 
 const Register = () => {
     return (
-        <div>
-            <h1>Register</h1>
+        <div className='formHome'>
+            <center>
+                <h1>Register</h1>
+            </center>
             <RegisterForm />
         </div>
     );
