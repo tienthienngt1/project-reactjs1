@@ -1,8 +1,11 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
 import { Form, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import { AuthContext } from "../../contexts/AuthContext"
 
 const LoginForm = () => {
+    //context
+    const {loginUser, authState} = useContext(AuthContext)
     //set state
     const [form, setForm] = useState({
         username: '' , password: ''
@@ -13,8 +16,11 @@ const LoginForm = () => {
         setForm({...form, [event.target.name]:event.target.value})
     }
     //onsubmit form
-    const onsubmitForm = event => {
+    const onsubmitForm = async event => {
         event.preventDefault()
+        const res = await loginUser(form)
+        console.log(res);
+        console.log(authState);
     }
     return (
         <div className='formHome'>
