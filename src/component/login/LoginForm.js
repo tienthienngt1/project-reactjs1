@@ -1,29 +1,35 @@
 import { useState, useContext } from "react"
-import { Form, Button } from "react-bootstrap";
-import { Link, Redirect } from "react-router-dom";
+import { Form, Button, Alert } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext"
 
 const LoginForm = () => {
     //context
-    const {loginUser, authState} = useContext(AuthContext)
+    const {loginAuthContext} = useContext(AuthContext)
     //set state
     const [form, setForm] = useState({
         username: '' , password: ''
     })
+    const [messageAlert, setMessageAlert] = useState(false)
     const {username, password} = form
     //onchange
     const onchangeForm = event => {
+        if(messageAlert){
+            setMessageAlert(false)
+        }
         setForm({...form, [event.target.name]:event.target.value})
     }
     //onsubmit form
     const onsubmitForm = async event => {
         event.preventDefault()
-        const res = await loginUser(form)
-        console.log(res);
-        console.log(authState);
+        const res = await loginAuthContext(form)
+        if(!res.status){
+            setMessageAlert(res.message)
+        }
     }
     return (
         <div className='formHome'>
+            {messageAlert ? (<Alert variant='danger'>{messageAlert}</Alert>) : ''}
             <Form onSubmit={onsubmitForm}>
                 <Form.Group>
                     <Form.Label>Username:</Form.Label>
@@ -33,6 +39,7 @@ const LoginForm = () => {
                         type="text"
                         name="username"
                         placeholder="Username"
+                        isInvalid={messageAlert ? true : false}
                         />
                 </Form.Group>
                 <Form.Group>
@@ -43,6 +50,7 @@ const LoginForm = () => {
                         type="text"
                         name="password"
                         placeholder="Password"
+                        isInvalid={messageAlert ? true : false}
                     />
                 </Form.Group>
                 <Button type="submit" variant="info" className="mt-3">Login</Button>
