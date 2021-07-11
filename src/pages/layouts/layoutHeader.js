@@ -1,9 +1,11 @@
-import React from 'react';
+import { Navbar } from "react-bootstrap";
 
 const LayoutHeader = () => {
     return (
-        <div>
-            <h1>Header</h1>
+        <div className="mb-5">
+            <Navbar bg="dark">
+                
+            </Navbar>    
         </div>
     );
 };

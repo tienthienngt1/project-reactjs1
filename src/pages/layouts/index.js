@@ -9,13 +9,13 @@ import './layoutCss.css'
 export function LayoutProtect ({component: Component, ...rest}){
     const {authState} = useContext(AuthContext)
     return (
-        <>
-        {authState.isAuthenticate ? '' : <Redirect to='/login' />}
+        <div className="container p-5">
+            {authState.isAuthenticate ? '' : <Redirect to='/login' />}
             <LayoutHeader />
             <LayoutNavbar />
             <Component />
             <LayoutFooter />
-        </>
+        </div>
     );
 };
 
@@ -23,12 +23,12 @@ export function LayoutProtect ({component: Component, ...rest}){
 export function LayoutAuth ({component: Component, ...rest}){
     const {authState} = useContext(AuthContext)
     return (
-        <>
-        {authState.isAuthenticate ? <Redirect to='/dashboard' />: '' }
+        <div className="container p-5">
+            {authState.isAuthenticate ? <Redirect to='/dashboard' />: '' }
             <LayoutHeader />
             <LayoutNavbar />
             <Component />
             <LayoutFooter />
-        </>
+        </div>
     );
 };

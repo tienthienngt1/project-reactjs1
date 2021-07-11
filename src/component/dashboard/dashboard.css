@@ -1,0 +1,12 @@
+.createButtonDiv{
+    margin-top: 20px;
+    position: relative;
+    height: 50px;
+}
+
+.createButton{
+    position: absolute;
+    bottom: 0;
+    right:2%;
+    border-radius: 50%;
+}

@@ -12,6 +12,7 @@ const AuthContextProvider = ({children}) => {
     //call reducer
     const [authState, dispatch] = useReducer(AuthReducer, {
         isAuthenticate: false,
+        user:null,
     })
     //send request authorization
     const sendResAuth = async () => {
@@ -20,12 +21,12 @@ const AuthContextProvider = ({children}) => {
             const user = await sendResAuthCore()
             if(!user.status){
                 localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME)
-                dispatch({type: SET_AUTH, payload: {isAuthenticate: false}})
+                dispatch({type: SET_AUTH, payload: {isAuthenticate: false, user:null}})
             }else {
-                dispatch({type: SET_AUTH, payload: {isAuthenticate: true}})
+                dispatch({type: SET_AUTH, payload: {isAuthenticate: true, user:user.user}})
             }
         }else{
-            dispatch({type: SET_AUTH, payload: {isAuthenticate: false}})
+            dispatch({type: SET_AUTH, payload: {isAuthenticate: false, user:null}})
         }
     }
     //use effect 
@@ -36,6 +37,8 @@ const AuthContextProvider = ({children}) => {
         if(user.status){
             localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, user.token)
             await sendResAuth()
+        }else{
+            localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME)
         }
         return user
     }
@@ -44,15 +47,21 @@ const AuthContextProvider = ({children}) => {
         const user = await registerCore(form)
         if(user.status){
             localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, user.token)
-            dispatch({type: SET_AUTH, payload: {isAuthenticate: true}})
+            await sendResAuth()
+        }else{
+            localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME)
         }
-        await sendResAuth()
         return user
+    }
+    //logout
+    const logoutAuthContext =async () => {
+        localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME)
+        await sendResAuth()
     }
     //context data
     const data = {
         authState,
-        loginAuthContext, registerAuthContext
+        loginAuthContext, registerAuthContext, logoutAuthContext
     }
     //return
     return (

@@ -1,13 +1,14 @@
-import { Link } from "react-router-dom"
+import CreateButtonDashboard from "../../component/dashboard/CreateButtonDashboard";
+import Main from "../../component/dashboard/main";
+import ModalDashboard from "../../component/dashboard/ModalDashboard";
 
 const Dashboard = () => {
     return (
-        <div>
-            dashboard
-            <Link to='/about'>
-                about
-            </Link>
-        </div>
+        <>
+            <Main />
+            <CreateButtonDashboard />
+            <ModalDashboard />
+        </>
     );
 };
 

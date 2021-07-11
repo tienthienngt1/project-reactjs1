@@ -1,9 +1,10 @@
-import React from 'react';
+import { Navbar } from "react-bootstrap";
 
 const LayoutFooter = () => {
     return (
-        <div>
-            <h1>Footter</h1>
+        <div className="mt-5">
+            <Navbar bg="dark">
+            </Navbar>
         </div>
     );
 };
