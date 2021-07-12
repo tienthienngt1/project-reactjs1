@@ -1,13 +1,15 @@
 import {useState, useContext} from 'react'
 import { Button, Modal,Form } from "react-bootstrap";
+import { PostContext } from '../../contexts/PostContext';
 import { StatusContext } from '../../contexts/StatusContext';
 
 const ModalDashboard = () => {
     //context
+    const {createPostContext} = useContext(PostContext)
     const {isOpenModal, setIsOpenModal} = useContext(StatusContext)
     //use  state
     const [postForm,setPostForm] = useState({
-        title:'',description:'',url:'',status:'to learn'
+        title:'',description:'',url:'',status:'TO LEARN'
     })
     //change input
     const onchangeForm = event => {
@@ -18,6 +20,10 @@ const ModalDashboard = () => {
     //submit form
     const submitForm = async event => {
         event.preventDefault()
+        const post = await createPostContext(postForm)
+        console.log(post)
+        setIsOpenModal(false)
+        setPostForm({title:'',description:'',url:''})
     }
     const {title, description, url, status} = postForm
     return (
@@ -61,7 +67,7 @@ const ModalDashboard = () => {
                                 />
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>Title:</Form.Label>
+                            <Form.Label>Status:</Form.Label>
                             <Form.Control
                                 as="select"
                                 defaultValue="TO LEARN"
@@ -69,9 +75,9 @@ const ModalDashboard = () => {
                                 value={status}
                                 onChange={onchangeForm}
                             >
-                                <option value="to lea">TO LEARN</option>
-                                <option value="learning">LEARNING</option>
-                                <option value="learned">LEARNED</option>
+                                <option value="TO LEARN">TO LEARN</option>
+                                <option value="LEARNING">LEARNING</option>
+                                <option value="LEARNED">LEARNED</option>
                             </Form.Control>
                         </Form.Group>
                         <Button variant="secondary" type="submit">Create</Button>

@@ -2,9 +2,15 @@ import {useContext} from 'react'
 import { Link } from "react-router-dom";
 import { Navbar, NavDropdown, Nav, Button } from "react-bootstrap";
 import { AuthContext } from "../../contexts/AuthContext";
+import { PostContext } from '../../contexts/PostContext';
 
 const LayoutNavbar = () => {
+    const {refreshPostContext} = useContext(PostContext)
     const {logoutAuthContext, authState} = useContext(AuthContext)
+    const logout = async () => {
+        await logoutAuthContext()
+        await refreshPostContext()
+    }
 	return (
 		<Navbar collapseOnSelect expand="lg" >
 			<Navbar.Brand to="/dashboard" as={Link}>COURSES</Navbar.Brand>
@@ -34,7 +40,7 @@ const LayoutNavbar = () => {
                 { authState.user ? (
                     <Nav>
                         <Nav.Link  as="span">Hello, {authState.user.username} !</Nav.Link>
-                        <Nav.Link as={Button} variant="secondary" onClick={()=>logoutAuthContext()}>
+                        <Nav.Link as={Button} variant="secondary" onClick={logout}>
                             Logout
                         </Nav.Link>
                     </Nav>

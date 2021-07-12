@@ -3,7 +3,7 @@ import { Button, Card } from "react-bootstrap";
 import { AuthContext } from "../../contexts/AuthContext"
 import { StatusContext } from "../../contexts/StatusContext"
 
-const Main = () => {
+const CardMain = () => {
     const {authState} = useContext(AuthContext)
     const {setIsOpenModal} = useContext(StatusContext)
     return (
@@ -21,4 +21,4 @@ const Main = () => {
     );
 };
 
-export default Main;
+export default CardMain;
