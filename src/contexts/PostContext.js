@@ -1,5 +1,5 @@
 import { createContext,useReducer, useEffect } from "react"
-import { CREATE_POST, GET_POST, REFRESH_POST } from "../constants/PostConstant";
+import { CREATE_POST, DELETE_POST, GET_POST, REFRESH_POST } from "../constants/PostConstant";
 import {createPostCore, deletePostCore, editPostCore, getPostCore } from "../cores/PostCore"
 import PostReducer from "../reducers/PostReducer"
 
@@ -61,7 +61,7 @@ const PostContextProvider = ({children}) => {
         try {
             const post = await deletePostCore(id)
             if(post.status){
-                await getPostContext()
+                dispatch({type:DELETE_POST, payload:id})
                 return post
             }
         } catch (error) {

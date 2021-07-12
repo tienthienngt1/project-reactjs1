@@ -1,30 +1,35 @@
+import {useContext} from 'react'
 import { Button, Card, Col, Row, Badge } from "react-bootstrap";
+import { PostContext } from '../../contexts/PostContext'
 
-const CardPost = post => {
+const CardPost = props => {
+    const {deletePostContext} = useContext(PostContext)
+    const color = props.post.status === 'TO LEARN' ? 'secondary' : props.post.status === 'LEARNING' ? 'danger' : 'success'
     return (
-        <Card border='secondary' className='mt-5'>
+        <Card border= {color} className='mt-5'>
             <Card.Body className='text-center'>
                 <Row className="text-center">
                     <Col sm={5}>
                         <Card.Title>
-                            <strong>{post.post.title}</strong>
+                            <strong>{props.post.title}</strong>
                         </Card.Title>
                     </Col>
                     <Col sm={7}>
-                        <Button variant='secondary' className="m-1 littleButton"><i className="bi bi-eye"></i></Button>
-                        <Button variant='secondary' className="m-1 littleButton"><i className="bi bi-pencil-square"></i></Button>
-                        <Button variant='secondary' className="m-1 littleButton"><i className="bi bi-trash"></i></Button>
+                        <a  href={props.post.url}>
+                            <Button variant={color} className="m-1"><i className="bi bi-eye"></i></Button>
+                        </a>
+                        <Button variant= {color} className="m-1" ><i className="bi bi-pencil-square"></i></Button>
+                        <Button variant= {color} className="m-1" onClick = {() => deletePostContext(props.post._id)} ><i className="bi bi-trash"></i></Button>
                     </Col>
                 </Row>
                 <Row className="text-center">
                     <Col>
                         <Card.Text>
-                            <small>{post.post.description}</small>
+                            <small>{props.post.description}</small>
                         </Card.Text>
                     </Col>
                     <Col>
-                    <Badge variant="secondary">{post.post.status}</Badge>
-
+                    <Badge variant={color}>{props.post.status}</Badge>
                     </Col>
                 </Row>
             </Card.Body>
