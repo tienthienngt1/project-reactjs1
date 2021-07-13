@@ -1,9 +1,8 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Getting Started with TODOLIST app
+This project was writing reactjs
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `yarn start`
+### `npm install`
