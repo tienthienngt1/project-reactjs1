@@ -1,4 +1,4 @@
-import { createContext,useReducer, useEffect } from "react"
+import { createContext,useReducer } from "react"
 import { CREATE_POST, DELETE_POST, GET_POST, REFRESH_POST } from "../constants/PostConstant";
 import {createPostCore, deletePostCore, editPostCore, getPostCore } from "../cores/PostCore"
 import PostReducer from "../reducers/PostReducer"
@@ -11,7 +11,6 @@ const PostContextProvider = ({children}) => {
     })
     //get post
     const getPostContext = async () => {
-        console.log('geetPost');
         try {
             const posts = await getPostCore()
             if(posts.status){
@@ -32,9 +31,8 @@ const PostContextProvider = ({children}) => {
             console.log(post.post)
             if(post.status){
                 dispatch({type:CREATE_POST, payload:post.post})
-                return post
             }
-            return{status: false, message: 'error! try createPostContext'}
+            return post
         } catch (error) {
             console.log(error)
             return {status: false, message: 'Error! createPostContext'}
@@ -42,8 +40,7 @@ const PostContextProvider = ({children}) => {
     }
     
     //edit post
-    const editPostContext = async (form, id) => {
-        form.postId = id
+    const editPostContext = async (form) => {
         try {
             const post = await editPostCore(form)
             if(post.status){

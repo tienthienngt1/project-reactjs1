@@ -5,6 +5,7 @@ import ModalDashboard from "../../component/dashboard/ModalDashboard";
 import { Col, Row } from "react-bootstrap";
 import CardPost from "../../component/dashboard/CardPost";
 import { PostContext } from '../../contexts/PostContext'
+import ModalEdit from '../../component/dashboard/ModalEdit';
 
 const Dashboard = () => {
     const {postState:{post}, getPostContext} = useContext(PostContext)
@@ -23,6 +24,7 @@ const Dashboard = () => {
                 ) :
             <CardMain />
         }
+            <ModalEdit />
             <CreateButtonDashboard />
             <ModalDashboard />
         </>

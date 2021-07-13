@@ -28,7 +28,7 @@ export const createPostCore = async form => {
 //edit post
 export const editPostCore = async form => {
     try {
-        const post = await axios.put(`${apiUrl}/post/edit/${form.postId}`, form)
+        const post = await axios.put(`${apiUrl}/post/edit/${form._id}`, form)
         return post.data
     } catch (error) {
         if(error.response)

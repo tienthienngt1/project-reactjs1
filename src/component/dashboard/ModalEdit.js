@@ -1,37 +1,31 @@
-import {useState, useContext} from 'react'
+import {useContext} from 'react'
 import { Button, Modal,Form } from "react-bootstrap";
 import { PostContext } from '../../contexts/PostContext';
 import { StatusContext } from '../../contexts/StatusContext';
 
-const ModalDashboard = () => {
+const ModalEdit = () => {
     //context
-    const {createPostContext} = useContext(PostContext)
-    const {isOpenModal, setIsOpenModal} = useContext(StatusContext)
-    //use  state
-    const [postForm,setPostForm] = useState({
-        title:'',description:'',url:'',status:'TO LEARN'
-    })
+    const {editPostContext} = useContext(PostContext)
+    const {isOpenModalEdit, setIsOpenModalEdit,postEdit,setPostEdit} = useContext(StatusContext)
     //change input
     const onchangeForm = event => {
-        setPostForm({
-            ...postForm, [event.target.name]: event.target.value
+        setPostEdit({
+            ...postEdit, [event.target.name]: event.target.value
         })
     }
+    console.log(postEdit);
     //submit form
     const submitForm = async event => {
         event.preventDefault()
-        console.log(postForm);
-        const post = await createPostContext(postForm)
-        console.log(post)
-        setIsOpenModal(false)
-        setPostForm({title:'',description:'',url:'',status:'TO LEARN'})
+        const post = await editPostContext(postEdit)
+        if(post.status)
+            setIsOpenModalEdit(false)
     }
-    const {title, description, url, status} = postForm
     return (
         <>
-            <Modal  aria-labelledby="modalDashboard" centered show={isOpenModal}>
-                <Modal.Header closeButton onHide={() => setIsOpenModal(false)}>
-                    <Modal.Title id="modalDashboard">
+            <Modal  aria-labelledby="modalEdit" centered show={isOpenModalEdit}>
+                <Modal.Header closeButton onHide={() => {setIsOpenModalEdit(false); setPostEdit('')}}>
+                    <Modal.Title id="modalEdit">
                         <h2>Create Awesome Things!</h2>
                     </Modal.Title>
                 </Modal.Header>
@@ -43,7 +37,7 @@ const ModalDashboard = () => {
                                 type="text"
                                 name="title"
                                 placeholder="title"
-                                value={title}
+                                value={postEdit.title}
                                 onChange={onchangeForm}
                                 />
                         </Form.Group>
@@ -53,7 +47,7 @@ const ModalDashboard = () => {
                                 type="text"
                                 name="description"
                                 placeholder="description"
-                                value={description}
+                                value={postEdit.description}
                                 onChange={onchangeForm}
                                 />
                         </Form.Group>
@@ -63,7 +57,7 @@ const ModalDashboard = () => {
                                 type="text"
                                 name="url"
                                 placeholder="https://example.com"
-                                value={url}
+                                value={postEdit.url}
                                 onChange={onchangeForm}
                                 />
                         </Form.Group>
@@ -71,9 +65,9 @@ const ModalDashboard = () => {
                             <Form.Label>Status:</Form.Label>
                             <Form.Control
                                 as="select"
-                                defaultValue="TO LEARN"
+                                defaultValue={postEdit.status}
                                 name="status"
-                                value={status}
+                                value={postEdit.status}
                                 onChange={onchangeForm}
                             >
                                 <option value="TO LEARN">TO LEARN</option>
@@ -81,15 +75,15 @@ const ModalDashboard = () => {
                                 <option value="LEARNED">LEARNED</option>
                             </Form.Control>
                         </Form.Group>
-                        <Button variant="secondary" type="submit">Create</Button>
+                        <Button variant="secondary" type="submit">Edit</Button>
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={() => setIsOpenModal(false)}>Close</Button>
+                    <Button onClick={() => {setIsOpenModalEdit(false); setPostEdit('')}} >Close</Button>
                 </Modal.Footer>
             </Modal>
         </>
     );
 };
 
-export default ModalDashboard;
+export default ModalEdit;

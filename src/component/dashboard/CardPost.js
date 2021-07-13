@@ -1,10 +1,16 @@
 import {useContext} from 'react'
 import { Button, Card, Col, Row, Badge } from "react-bootstrap";
 import { PostContext } from '../../contexts/PostContext'
+import { StatusContext } from '../../contexts/StatusContext';
 
 const CardPost = props => {
-    const {deletePostContext} = useContext(PostContext)
     const color = props.post.status === 'TO LEARN' ? 'secondary' : props.post.status === 'LEARNING' ? 'danger' : 'success'
+    const {setIsOpenModalEdit, setPostEdit} = useContext(StatusContext)
+    const {deletePostContext} = useContext(PostContext)
+    const editPost = () => {
+        setPostEdit(props.post)
+        setIsOpenModalEdit(true)
+    }
     return (
         <Card border= {color} className='mt-5'>
             <Card.Body className='text-center'>
@@ -18,7 +24,7 @@ const CardPost = props => {
                         <a  href={props.post.url}>
                             <Button variant={color} className="m-1"><i className="bi bi-eye"></i></Button>
                         </a>
-                        <Button variant= {color} className="m-1" ><i className="bi bi-pencil-square"></i></Button>
+                        <Button variant= {color} className="m-1" onClick={editPost} ><i className="bi bi-pencil-square"></i></Button>
                         <Button variant= {color} className="m-1" onClick = {() => deletePostContext(props.post._id)} ><i className="bi bi-trash"></i></Button>
                     </Col>
                 </Row>
