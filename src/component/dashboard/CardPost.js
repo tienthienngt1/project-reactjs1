@@ -5,8 +5,8 @@ import { StatusContext } from '../../contexts/StatusContext';
 
 const CardPost = props => {
     const color = props.post.status === 'TO LEARN' ? 'secondary' : props.post.status === 'LEARNING' ? 'danger' : 'success'
-    const {setIsOpenModalEdit, setPostEdit} = useContext(StatusContext)
-    const {deletePostContext} = useContext(PostContext)
+    const {setIsOpenModalEdit , setNotifi, setPostEdit} = useContext(StatusContext)
+    const {deletePostContext } = useContext(PostContext)
     const editPost = () => {
         setPostEdit(props.post)
         setIsOpenModalEdit(true)
@@ -25,7 +25,7 @@ const CardPost = props => {
                             <Button variant={color} className="m-1"><i className="bi bi-eye"></i></Button>
                         </a>
                         <Button variant= {color} className="m-1" onClick={editPost} ><i className="bi bi-pencil-square"></i></Button>
-                        <Button variant= {color} className="m-1" onClick = {() => deletePostContext(props.post._id)} ><i className="bi bi-trash"></i></Button>
+                        <Button variant= {color} className="m-1" onClick = {() => {deletePostContext(props.post._id); setNotifi({isNotifi: true, message: 'Delete successfully!'})}} ><i className="bi bi-trash"></i></Button>
                     </Col>
                 </Row>
                 <Row className="text-center">

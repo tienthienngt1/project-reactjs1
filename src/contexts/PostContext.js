@@ -7,7 +7,8 @@ export const PostContext = createContext()
 
 const PostContextProvider = ({children}) => {
     const [postState, dispatch] = useReducer(PostReducer, {
-        post: false
+        post: false,
+        postEdit: '',
     })
     //get post
     const getPostContext = async () => {
@@ -73,7 +74,7 @@ const PostContextProvider = ({children}) => {
     //data
     const data = {
         postState,
-        getPostContext,createPostContext,deletePostContext,editPostContext, refreshPostContext
+        getPostContext,createPostContext,deletePostContext,editPostContext, refreshPostContext,
     }
     //return
     return (

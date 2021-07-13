@@ -4,6 +4,7 @@ import { AuthContext } from "../../contexts/AuthContext"
 import { StatusContext } from "../../contexts/StatusContext"
 
 const CardMain = () => {
+    console.log('cardMain')
     const {authState} = useContext(AuthContext)
     const {setIsOpenModal} = useContext(StatusContext)
     return (

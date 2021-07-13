@@ -2,9 +2,11 @@ import { useState, useContext } from "react"
 import { Form, Button, Alert } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext"
+import { StatusContext } from "../../contexts/StatusContext";
 
 const LoginForm = () => {
     //context
+    const {notifi, setNotifi} = useContext(StatusContext)
     const {loginAuthContext} = useContext(AuthContext)
     //set state
     const [form, setForm] = useState({
@@ -25,6 +27,8 @@ const LoginForm = () => {
         const res = await loginAuthContext(form)
         if(!res.status){
             setMessageAlert(res.message)
+        }else{
+            setNotifi({...notifi, isNotifi: true, message: res.message})
         }
     }
     return (

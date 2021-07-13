@@ -12,15 +12,16 @@ const LayoutNavbar = () => {
         await refreshPostContext()
     }
 	return (
+        <>
 		<Navbar collapseOnSelect expand="lg" >
 			<Navbar.Brand to="/dashboard" as={Link}>COURSES</Navbar.Brand>
 			<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 			<Navbar.Collapse id="responsive-navbar-nav">
 				<Nav className="mr-auto">
 					<Nav.Link to="dashboard" as={Link}>Dashboard</Nav.Link>
-					<Nav.Link to="/about" as={Link}>About</Nav.Link>
+					<Nav.Link  to="/about" as={Link}>About</Nav.Link>
 					<NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-						<NavDropdown.Item as={Link} to="/dropdown1">
+						<NavDropdown.Item  as={Link} to="/dropdown1">
 							dropdown1
 						</NavDropdown.Item>
 						<NavDropdown.Divider />
@@ -48,6 +49,7 @@ const LayoutNavbar = () => {
                 }
 			</Navbar.Collapse>
 		</Navbar>
+        </>
 	);
 };
 

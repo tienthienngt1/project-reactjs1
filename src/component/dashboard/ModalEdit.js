@@ -1,4 +1,4 @@
-import {useContext} from 'react'
+import {useContext,useState, useEffect} from 'react'
 import { Button, Modal,Form } from "react-bootstrap";
 import { PostContext } from '../../contexts/PostContext';
 import { StatusContext } from '../../contexts/StatusContext';
@@ -6,25 +6,33 @@ import { StatusContext } from '../../contexts/StatusContext';
 const ModalEdit = () => {
     //context
     const {editPostContext} = useContext(PostContext)
-    const {isOpenModalEdit, setIsOpenModalEdit,postEdit,setPostEdit} = useContext(StatusContext)
+    const {isOpenModalEdit, setIsOpenModalEdit,setNotifi, postEdit} = useContext(StatusContext)
+    const [postForm , setPostForm] = useState('')
+    useEffect(() => {
+        setPostForm(postEdit)
+    }, [postEdit])
     //change input
     const onchangeForm = event => {
-        setPostEdit({
-            ...postEdit, [event.target.name]: event.target.value
+        setPostForm({
+            ...postForm, [event.target.name]: event.target.value
         })
+        console.log(postForm);
     }
-    console.log(postEdit);
+
     //submit form
     const submitForm = async event => {
         event.preventDefault()
-        const post = await editPostContext(postEdit)
-        if(post.status)
+        const post = await editPostContext(postForm)
+        console.log(post);
+        if(post.status){
             setIsOpenModalEdit(false)
+            setNotifi({isNotifi: true, message: post.message})
+        }
     }
     return (
         <>
-            <Modal  aria-labelledby="modalEdit" centered show={isOpenModalEdit}>
-                <Modal.Header closeButton onHide={() => {setIsOpenModalEdit(false); setPostEdit('')}}>
+            <Modal  aria-labelledby="modalEdit" centered animation={false} show={isOpenModalEdit}>
+                <Modal.Header closeButton onHide={() => {setIsOpenModalEdit(false)}}>
                     <Modal.Title id="modalEdit">
                         <h2>Create Awesome Things!</h2>
                     </Modal.Title>
@@ -37,7 +45,7 @@ const ModalEdit = () => {
                                 type="text"
                                 name="title"
                                 placeholder="title"
-                                value={postEdit.title}
+                                value={postForm.title}
                                 onChange={onchangeForm}
                                 />
                         </Form.Group>
@@ -47,7 +55,7 @@ const ModalEdit = () => {
                                 type="text"
                                 name="description"
                                 placeholder="description"
-                                value={postEdit.description}
+                                value={postForm.description}
                                 onChange={onchangeForm}
                                 />
                         </Form.Group>
@@ -57,7 +65,7 @@ const ModalEdit = () => {
                                 type="text"
                                 name="url"
                                 placeholder="https://example.com"
-                                value={postEdit.url}
+                                value={postForm.url}
                                 onChange={onchangeForm}
                                 />
                         </Form.Group>
@@ -65,9 +73,9 @@ const ModalEdit = () => {
                             <Form.Label>Status:</Form.Label>
                             <Form.Control
                                 as="select"
-                                defaultValue={postEdit.status}
+                                defaultValue={postForm.status}
                                 name="status"
-                                value={postEdit.status}
+                                value={postForm.status}
                                 onChange={onchangeForm}
                             >
                                 <option value="TO LEARN">TO LEARN</option>
@@ -79,7 +87,7 @@ const ModalEdit = () => {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={() => {setIsOpenModalEdit(false); setPostEdit('')}} >Close</Button>
+                    <Button onClick={() => {setIsOpenModalEdit(false); }} >Close</Button>
                 </Modal.Footer>
             </Modal>
         </>

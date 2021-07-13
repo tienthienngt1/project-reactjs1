@@ -4,9 +4,10 @@ import { PostContext } from '../../contexts/PostContext';
 import { StatusContext } from '../../contexts/StatusContext';
 
 const ModalDashboard = () => {
+    console.log('modalDashboard');
     //context
     const {createPostContext} = useContext(PostContext)
-    const {isOpenModal, setIsOpenModal} = useContext(StatusContext)
+    const {isOpenModal, setIsOpenModal, setNotifi} = useContext(StatusContext)
     //use  state
     const [postForm,setPostForm] = useState({
         title:'',description:'',url:'',status:'TO LEARN'
@@ -24,6 +25,7 @@ const ModalDashboard = () => {
         const post = await createPostContext(postForm)
         console.log(post)
         setIsOpenModal(false)
+        setNotifi({isNotifi:true, message: post.message})
         setPostForm({title:'',description:'',url:'',status:'TO LEARN'})
     }
     const {title, description, url, status} = postForm

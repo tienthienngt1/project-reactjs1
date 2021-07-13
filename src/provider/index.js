@@ -5,13 +5,13 @@ import Routes from "../routes";
 
 const Provider = () => {
 	return (
-		<PostContextProvider>
-		    <AuthContextProvider>
+        <AuthContextProvider>
+                <PostContextProvider>
 				<StatusContextProvider>
 					<Routes />
 				</StatusContextProvider>
-		    </AuthContextProvider>
-		</PostContextProvider>
+		    </PostContextProvider>
+        </AuthContextProvider>
 	);
 };
 

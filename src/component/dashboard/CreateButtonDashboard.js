@@ -4,6 +4,7 @@ import {Button} from 'react-bootstrap'
 import './dashboard.css'
 
 const CreateButtonDashboard = () => {
+    console.log('createButtonDashboard')
     const {setIsOpenModal} = useContext(StatusContext)
     return (
         <div className="createButtonDiv">
