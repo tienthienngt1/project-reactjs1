@@ -3,6 +3,7 @@ import { Form, Button, Alert } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import { AuthContext } from "../../contexts/AuthContext"
 import { StatusContext } from "../../contexts/StatusContext"
+import './registerFormcss.css'
 
 const RegisterForm = () => {
     // auth context
@@ -16,6 +17,7 @@ const RegisterForm = () => {
         isError: false, messageError: '',
         isPass: false, isValid: false
     })
+    const [classShowPass, setClassShowPass] = useState('bi bi-eye-slash')
     const {username, password, confirmPassword} = form
     //set value into state
     const onchangeForm = event => {
@@ -50,6 +52,20 @@ const RegisterForm = () => {
         }
         setError({isError: true, message: responseRegister.message})
     }
+    const showPassword = () => {
+        console.log('show');
+        const inputPass = document.getElementById('inputPassword')
+        const inputConfirm = document.getElementById('inputConfirm')
+        if(inputPass.type === 'password'){
+            inputPass.type = 'text'
+            inputConfirm.type = 'text'
+            setClassShowPass('bi bi-eye')
+        }else{
+            inputPass.type = 'password'
+            inputConfirm.type = 'password'
+            setClassShowPass('bi bi-eye-slash')
+        }
+    }
     return (
         <>
             {error.isError ? <Alert variant='danger'>{error.message}</Alert> : ''}
@@ -68,21 +84,26 @@ const RegisterForm = () => {
                 <Form.Group>
                     <Form.Label>Password:</Form.Label>
                     <Form.Control 
+                        id="inputPassword"
                         value={password}
                         onChange={onchangeForm}
-                        type="text"
+                        type="password"
                         name="password"
                         placeholder="Password"
                         isInvalid={error.isPass}
                         isValid  = {error.isValid}
                         />
+                        <Button variant="secondary" id='eyePasswordRegister' onClick={showPassword}>
+                            <i className={classShowPass}></i>
+                        </Button>
                 </Form.Group>
                 <Form.Group>
                     <Form.Label>Confirm Password:</Form.Label>
                     <Form.Control 
+                        id="inputConfirm"
                         value={confirmPassword}
                         onChange={onchangeForm}
-                        type="text"
+                        type="password"
                         name="confirmPassword"
                         placeholder="Confirm Password"
                         isInvalid={error.isPass}

@@ -3,6 +3,7 @@ import { Form, Button, Alert } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext"
 import { StatusContext } from "../../contexts/StatusContext";
+import './loginFormcss.css'
 
 const LoginForm = () => {
     //context
@@ -14,6 +15,7 @@ const LoginForm = () => {
     })
     const [messageAlert, setMessageAlert] = useState(false)
     const {username, password} = form
+    const [classShowPass, setClassShowPass] = useState('bi bi-eye-slash')
     //onchange
     const onchangeForm = event => {
         if(messageAlert){
@@ -29,6 +31,16 @@ const LoginForm = () => {
             setMessageAlert(res.message)
         }else{
             setNotifi({...notifi, isNotifi: true, message: res.message})
+        }
+    }
+    const showPassword = () => {
+        const input = document.getElementById("inputPass")
+        if(input.type === 'password'){
+            input.type = 'text';
+            setClassShowPass('bi bi-eye')
+        }else{
+            input.type = 'password';
+            setClassShowPass('bi bi-eye-slash')
         }
     }
     return (
@@ -51,11 +63,15 @@ const LoginForm = () => {
                     <Form.Control  
                         onChange={onchangeForm}
                         value={password}
-                        type="text"
+                        type="password"
                         name="password"
                         placeholder="Password"
                         isInvalid={messageAlert ? true : false}
+                        id='inputPass'
                     />
+                    <Button variant='secondary'  id='eyePassword' onClick={showPassword} >
+                        <i  className={classShowPass} ></i>
+                    </Button>
                 </Form.Group>
                 <Button type="submit" variant="info" className="mt-3">Login</Button>
             </Form>
