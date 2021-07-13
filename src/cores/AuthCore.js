@@ -31,7 +31,7 @@ export const sendResAuthCore = async () => {
 
 export const registerCore = async form => {
     try {
-        const user = axios.post(`${apiUrl}/auth/register`, form)
+        const user =await axios.post(`${apiUrl}/auth/register`, form)
         if(user.data.status)
             return user.data
         return {status: false, message: 'Error try registerCores!'}

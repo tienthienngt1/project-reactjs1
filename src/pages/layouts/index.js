@@ -21,7 +21,6 @@ export function LayoutProtect ({component: Component, ...rest}){
     );
 };
 
-
 export function LayoutAuth ({component: Component, ...rest}){
     const {authState} = useContext(AuthContext)
     return (
